@@ -84,7 +84,6 @@ export class ServerTCPClient extends TcpClientBase{
         this.clearSocketData();
 
     }
-
     protected clear(): void {
 
     }

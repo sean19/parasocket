@@ -79,7 +79,6 @@ export declare class SocketData {
     public  getSocketID():number;
     public  setSocketID(idd:number):void;
     public  getid():number;
-    public dispose():void;
     protected clear():void;
 
 }

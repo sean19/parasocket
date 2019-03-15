@@ -221,7 +221,7 @@ export class SocketData {
     }
     protected clear():void
     {
-
+        throw new Error("socket data did not overrided");
     }
 }
 export enum EnumServerType {
