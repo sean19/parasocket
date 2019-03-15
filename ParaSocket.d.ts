@@ -1,5 +1,3 @@
-import {SocketData} from "./socketCore/socketServer/SocketData";
-
 export declare class ParaSocket {
     public static showClientsInserver(serverName:string):void;
     public static registorServerSocketData(servername:string,socketData:Function):void;
@@ -10,10 +8,11 @@ export declare class ParaSocket {
     /**
      * 添加服务器
      * @param {number} serid
+     * @param {string} servertype 服务器类型（local/net）
      * @param {string} serverName
      * @param {number} port
      */
-    public static addServer(serid:number,serverName:string,port:number):void;
+    public static addServer(serid:number,serverName:string,port:number,stype:EnumServerType):void;
     /**
      * 添加socket客户端
      * @param {number} serid
@@ -36,7 +35,8 @@ export declare class ParaSocket {
      * @param {number} socketid
      * @returns {SocketData}
      */
-    public static getServerClientData(serverName:string,socketid:number):SocketData;
+    public static getServerClientData(serverName:string,socketid:number):SocketData
+    ;
     /**
      * 客户端发送二进制数据到服务器
      * @param {string} clientName
@@ -71,5 +71,20 @@ export declare class ParaSocket {
      * @param {number} socketid
      */
     public static removeClientOnServer(serverName:string,socketid:number): void;
+
+}
+export declare class SocketData {
+    constructor(socketname:string,socketID:number);
+    public socketName:string;
+    public  getSocketID():number;
+    public  setSocketID(idd:number):void;
+    public  getid():number;
+    public dispose():void;
+    protected clear():void;
+
+}
+export enum EnumServerType {
+    local_server=1,
+    ipv4_server=2,
 
 }

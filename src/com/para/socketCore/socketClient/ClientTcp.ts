@@ -5,10 +5,8 @@ import {SocketPackage} from "../SocketPackage";
 import {SocketMessageRecever} from "../socketServer/SocketMessageRecever";
 import {Socket} from "net";
 import {TcpClientBase} from "../core/TcpClientBase";
-import {SocketData} from "../socketServer/SocketData";
 
 export class ClientTcp extends TcpClientBase{
-    public socketData: SocketData;
     public _is_alive: boolean = true;
     private inputPkgList: SocketPackage[] = [];
     protected receiver: SocketMessageRecever;

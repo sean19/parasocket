@@ -10,7 +10,7 @@ import {Socket} from "net";
 import {ClientTcp} from "./socketClient/ClientTcp";
 import {SocketPackage} from "./SocketPackage";
 import {ServerTCPClient} from "./socketServer/ServerTCPClient";
-import {SocketData} from "./socketServer/SocketData";
+import {EnumSocketEvent} from "./socketEvent/EnumSocketEvent";
 
 /**
  * 添加服务器
@@ -68,12 +68,17 @@ export class ParaSocket
     /**
      * 添加服务器
      * @param {number} serid
+     * @param {string} servertype 服务器类型（local/net）
      * @param {string} serverName
      * @param {number} port
      */
-    public static addServer(serid:number,serverName:string,port:number):void
+    public static addServer(serid:number,serverName:string,port:number,stype:EnumServerType):void
     {
-       var info:InfoServer =  <InfoServer>ParaSocket.config.addServerInfo(serid,serverName,port,"");
+       var info:InfoServer =  <InfoServer>ParaSocket.config.addServerInfo(serid,serverName,port,"","",false,stype);
+        if(info == null){
+            ParaSocket.logerr("cannot find server name :"+serverName+" in config,  maby ur server oready have been deleted");
+            return;
+        }
         ParaSocket.tcpServerMgr.addServer(info);
     }
 
@@ -87,6 +92,10 @@ export class ParaSocket
     public static addClient(serid:number,serverName:string,port:number,ipaddress:string ):void
     {
         var info:InfoClient =  <InfoClient>ParaSocket.config.addServerInfo(serid,serverName,port,"",ipaddress,true);
+        if(info == null){
+            ParaSocket.logerr("cannot find client name :"+serverName+" in config, make sure u have add client or maby you client oready have been deleted");
+            return;
+        }
         ParaSocket.tcpClientMgr.addClient(info);
     }
 
@@ -118,9 +127,13 @@ export class ParaSocket
      */
     public static sendmsg2Server(clientName:string,cmdid:number,buff:Buffer):void{
         var client:ClientTcp = ParaSocket.tcpClientMgr.getClientByName(clientName);
+        if(client){
         var pkg:SocketPackage = new SocketPackage(clientName,cmdid);
         pkg.putBytes(buff);
         client.sendPkg(pkg);
+        }else{
+            ParaSocket.logerr("cannot find client :" + clientName);
+        }
     }
 
     /**
@@ -132,9 +145,13 @@ export class ParaSocket
      */
     public static sendmsg2Client(serverName:string,socketid:number,cmdid:number,buff:Buffer):void{
         var client:ServerTCPClient = ParaSocket.tcpServerMgr.getClient(serverName,socketid);
+        if(client){
         var pkg:SocketPackage = new SocketPackage(serverName,cmdid);
         pkg.putBytes(buff);
         client.sendPkg(pkg);
+        }else{
+            ParaSocket.logerr("client id:"+socketid+" cannot find in server:"+serverName);
+        }
     }
 
     /**
@@ -146,7 +163,11 @@ export class ParaSocket
     public static addCallback(servername:string,cmdID:number,callback:(name:string,socketid:number,cmdid:number, buffer:Buffer) => void):void
     {
         var infoMain:InfoBase = ParaSocket.config.getServerInfoByName(servername);
+        if(infoMain){
         infoMain.addCallback(cmdID,callback);
+        }else{
+            ParaSocket.logerr("cannot find server:"+servername+" in config, make sure u have add server or maby you server oready have been deleted");
+        }
     }
 
     /**
@@ -162,9 +183,50 @@ export class ParaSocket
      * @param {number} socketid
      */
     public static removeClientOnServer(serverName:string,socketid:number): void {
-        ParaSocket.tcpServerMgr.getServerBySocketServerName(serverName).removeClient(socketid);
+        var server = ParaSocket.tcpServerMgr.getServerBySocketServerName(serverName);
+        if(server){
+            server.removeClient(socketid);
+        }else{
+            ParaSocket.logerr("cannot find server :"+serverName);
+        }
     }
 
 
+
+
+}
+export class SocketData {
+    protected _socket_id:number = 0;
+    public socketName:string;
+    public getSocketID(){
+        return this._socket_id;
+    }
+    public setSocketID(idd:number)
+    {
+        ParaSocket._log.log("错误赋值--!!!!!!!紧急通知||||||||||||||||||||||||");
+    }
+    constructor(socketname:string,socketID:number)
+    {
+        this._socket_id = socketID;
+        this.socketName=socketname;
+    }
+
+    public  getid():number
+    {
+        return this._socket_id;
+    }
+    public dispose():void
+    {
+        this.clear();
+    }
+    protected clear():void
+    {
+
+    }
+}
+export enum EnumServerType {
+    local_server=1,
+    ipv4_server=2,
+    ipv6_server=3,
 }
 

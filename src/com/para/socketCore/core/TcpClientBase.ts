@@ -1,8 +1,7 @@
 import {IItem} from "./IItem";
 import {InfoClient} from "../info/InfoClient";
 import {SocketPackage} from "../SocketPackage";
-import {SocketData} from "../socketServer/SocketData";
-import {ParaSocket} from "../ParaSocket";
+import {ParaSocket, SocketData} from "../ParaSocket";
 import {InfoBase} from "../info/InfoBase";
 
 export class TcpClientBase implements IItem {

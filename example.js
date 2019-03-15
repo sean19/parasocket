@@ -2,7 +2,8 @@
 
 
 
-const App_1 = require("./lib/com/para/ParaSocket");
-App_1.ParaSocket.log("11");
-App_1.ParaSocket.tcpClientMgr
+
+
+const App_1 = require("./dest/lib/com/para/socketCore/ParaSocket");
+App_1.ParaSocket.addServer(0,'s',8083,2);
 console.log("------")
