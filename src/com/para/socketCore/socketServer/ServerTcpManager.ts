@@ -1,6 +1,7 @@
 import {ServerTcp} from "./ServerTcp";
 import {ServerTCPClient} from "./ServerTCPClient";
 import {InfoServer} from "../info/InfoServer";
+import {ParaSocket, SocketData} from "../ParaSocket";
 
 export class ServerTcpManager  {
 
@@ -36,7 +37,23 @@ export class ServerTcpManager  {
         if(server != null)
         {
             return server.clientMap;
+        }else{
+            ParaSocket.logerr("do not have server :"+serverName);
         }
+    }
+    public getAllClinetsData(serverName:string):SocketData[]{
+        var arr:SocketData[] = [];
+        var arrclients = this.getAllClinets(serverName);
+        if(arrclients ==null){
+            ParaSocket.logerr("connot find server clients")
+        }else{
+            arrclients.forEach(client=>{
+                arr.push(client.socketData);
+            })
+        }
+
+
+        return arr;
     }
 
 

@@ -20,7 +20,7 @@ export class ClientTcp extends TcpClientBase{
     }
     public start()
     {
-        console.log("开始客户端的连接模块:"+this.infoClient.ipAddress+":"+this.infoClient.port);
+        ParaSocket.log("开始客户端的连接模块:"+this.infoClient.ipAddress+":"+this.infoClient.port);
         this.onStartConnect();
     }
     protected onStartConnect(): void {
@@ -36,10 +36,10 @@ export class ClientTcp extends TcpClientBase{
     protected onConnected(connnectStr:string): void
     {
         if(this._is_alive==false){
-            console.log('客户端连接'+connnectStr+'成功,但是这个已经被干掉了,当出现这个提示请检查代码！');
+            ParaSocket.log('客户端连接'+connnectStr+'成功,但是这个已经被干掉了,当出现这个提示请检查代码！');
             return;
         }
-        console.log('客户端连接'+connnectStr+'成功');
+        ParaSocket.log('客户端连接'+connnectStr+'成功');
         ParaSocket.socketEventCenter.callEvent(EnumSocketEvent.client_connected, [this.infoClient.serverName, connnectStr]);
     }
 
@@ -85,19 +85,23 @@ export class ClientTcp extends TcpClientBase{
 
         if (this._is_alive == false)
             return;
+        ParaSocket.logerr("连接服务端错误,正在onClose:"+this.infoClient.serverName)
         this.removeMe();
     }
     protected onEnd(): void {
         if (this._is_alive == false)
             return;
+        ParaSocket.logerr("连接服务端错误,正在onEnd:"+this.infoClient.serverName)
         this.removeMe();
     }
     protected onError(): void {
         if (this._is_alive == false)
             return;
+        ParaSocket.logerr("连接服务端错误,正在onError:"+this.infoClient.serverName)
         this.removeMe();
     }
     protected removeMe(): void {
+
         ParaSocket.removeClient(this.infoClient.serverName);
     }
     //====================================================================

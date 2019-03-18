@@ -1,6 +1,6 @@
 {
   "name": "parasocket",
-  "version": "1.0.12",
+  "version": "1.0.16",
   "description": "parasocket description ",
   "keywords": [
     "demo",
@@ -13,6 +13,8 @@
   "scripts": {
     "move_package":"cp package.json ./dest",
     "move_d.ts":"cp ParaSocket.d.ts ./dest/lib/com/para/socketCore",
+    "move_README":"cp README.md ./dest",
+    "move_LICENSE":"cp LICENSE ./dest",
     "tsc":"tsc",
     "sean_publish":"npm publish dest"
   },

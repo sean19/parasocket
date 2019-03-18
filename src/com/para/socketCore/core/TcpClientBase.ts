@@ -38,7 +38,7 @@ export class TcpClientBase implements IItem {
         }
         var handlerBase: Function = handlerInfo.callback;
         if (handlerBase != null) {
-            await  handlerBase.call(null,serverName, socketID, cmdType, pkg);
+            await  handlerBase.call(null,serverName, socketID, cmdType, pkg.protoBuf);
         }
     }
     public getid(): number {

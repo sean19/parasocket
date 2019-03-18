@@ -38,6 +38,12 @@ export declare class ParaSocket {
     public static getServerClientData(serverName:string,socketid:number):SocketData
     ;
     /**
+     * get all client data
+     * @param {string} servername
+     * @returns {SocketData[]}
+     */
+    public static getAllServerClientData(servername:string):SocketData[];
+    /**
      * 客户端发送二进制数据到服务器
      * @param {string} clientName
      * @param {number} cmdid

@@ -100,6 +100,16 @@ export class ParaSocket
     }
 
     /**
+     * get all client data
+     * @param {string} servername
+     * @returns {SocketData[]}
+     */
+    public static getAllServerClientData(servername:string):SocketData[]
+    {
+        return ParaSocket.tcpServerMgr.getAllClinetsData(servername);
+    }
+
+    /**
      * 根据名字获取客户端的socketData
      * @param {string} clientName
      * @returns {SocketData}
