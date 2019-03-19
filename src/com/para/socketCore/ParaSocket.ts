@@ -40,7 +40,7 @@ export class ParaSocket
     public static socketEventCenter:SocketEventManager = new SocketEventManager();
     public static config:ParaConfig = new ParaConfig();
 
-    public static showLog:boolean=true;
+    public static showLog:boolean = false;
     // public static tcpClient:
     public static onen_connect:boolean = true;
 
