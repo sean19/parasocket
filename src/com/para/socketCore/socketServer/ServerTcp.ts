@@ -2,9 +2,8 @@ import {Server, Socket} from "net";
 import {ServerTCPClient} from "./ServerTCPClient";
 import {IItem} from "../core/IItem";
 import {InfoServer} from "../info/InfoServer";
-import {EnumServerType, ParaSocket} from "../ParaSocket";
+import {EnumServerType, EnumSocketEvent, ParaSocket} from "../ParaSocket";
 import {InfoClient} from "../info/InfoClient";
-import {EnumSocketEvent} from "../socketEvent/EnumSocketEvent";
 
 export class ServerTcp implements IItem
 {
@@ -69,7 +68,7 @@ export class ServerTcp implements IItem
 
         this.client_id++;
         // console.log("服务端："+ParaSocket.config.ipv4+":"+this.serverinfo.port+"——收到连接:"+sock.remoteAddress+":"+sock.remotePort);
-        ParaSocket.socketEventCenter.callEvent(EnumSocketEvent.server_receive_connected, [this.serverinfo.serverName,this.client_id]);
+        ParaSocket.callEvent(EnumSocketEvent.server_client_connected, [this.serverinfo.serverName,this.client_id]);
         var infoClient:InfoClient = new InfoClient(this.client_id,this.serverinfo.serverName,sock.remoteAddress,sock.remotePort,sock);
         var client:ServerTCPClient  = new ServerTCPClient(infoClient);
         this.clientMap.set(this.client_id,client);

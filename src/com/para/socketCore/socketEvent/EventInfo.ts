@@ -1,4 +1,4 @@
-import {EnumSocketEvent} from "./EnumSocketEvent";
+import {EnumSocketEvent} from "../ParaSocket";
 
 export class EventInfo{
     public evt:EnumSocketEvent;

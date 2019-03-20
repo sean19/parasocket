@@ -1,5 +1,5 @@
 import {EventInfo} from "./EventInfo";
-import {EnumSocketEvent} from "./EnumSocketEvent";
+import {EnumSocketEvent} from "../ParaSocket";
 
 export class SocketEventManager
 {

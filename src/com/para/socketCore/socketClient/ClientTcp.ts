@@ -1,5 +1,4 @@
-import {ParaSocket} from "../ParaSocket";
-import {EnumSocketEvent} from "../socketEvent/EnumSocketEvent";
+import {EnumSocketEvent, ParaSocket} from "../ParaSocket";
 import {InfoClient} from "../info/InfoClient";
 import {SocketPackage} from "../SocketPackage";
 import {SocketMessageRecever} from "../socketServer/SocketMessageRecever";
@@ -40,7 +39,7 @@ export class ClientTcp extends TcpClientBase{
             return;
         }
         ParaSocket.log('客户端连接'+connnectStr+'成功');
-        ParaSocket.socketEventCenter.callEvent(EnumSocketEvent.client_connected, [this.infoClient.serverName, connnectStr]);
+        ParaSocket.callEvent(EnumSocketEvent.client_connected, [this.infoClient.serverName, connnectStr]);
     }
 
 
@@ -111,7 +110,7 @@ export class ClientTcp extends TcpClientBase{
             return;
         }
         this._is_alive = false;
-        ParaSocket.socketEventCenter.callEvent(EnumSocketEvent.client_disConnect, [this.infoClient.serverName, this.infoClient.id]);
+        ParaSocket.callEvent(EnumSocketEvent.client_disConnect, [this.infoClient.serverName, this.infoClient.id]);
         this.removeMe();
         this.removeEvent();
         this.clearClientInfo();

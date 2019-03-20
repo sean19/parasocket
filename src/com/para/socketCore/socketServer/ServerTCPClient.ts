@@ -1,8 +1,7 @@
 import {SocketPackage} from "../SocketPackage";
-import {ParaSocket} from "../ParaSocket";
+import {EnumSocketEvent, ParaSocket} from "../ParaSocket";
 import {InfoClient} from "../info/InfoClient";
 import {SocketMessageRecever} from "./SocketMessageRecever";
-import {EnumSocketEvent} from "../socketEvent/EnumSocketEvent";
 import {TcpClientBase} from "../core/TcpClientBase";
 
 export class ServerTCPClient extends TcpClientBase{
@@ -72,10 +71,10 @@ export class ServerTCPClient extends TcpClientBase{
         if (this._is_alive == false) {
             return;
         }
-        ParaSocket.socketEventCenter.callEvent(EnumSocketEvent.server_client_disConnect, [this.infoClient.serverName, this.getid()]);
+        ParaSocket.callEvent(EnumSocketEvent.server_client_disConnect, [this.infoClient.serverName, this.getid()]);
         ParaSocket.log('客户端断开连接,socketId='+this.getid()+"server:"+this.infoClient.serverName+"::"+this.infoClient.ipAddress+":"+this.infoClient.port);
         this._is_alive = false;
-        ParaSocket.socketEventCenter.callEvent(EnumSocketEvent.client_disConnect, [this.infoClient.serverName, this.infoClient.id]);
+        ParaSocket.callEvent(EnumSocketEvent.client_disConnect, [this.infoClient.serverName, this.infoClient.id]);
         this.removeMe();
         this.clear();
         this.removeEvent();

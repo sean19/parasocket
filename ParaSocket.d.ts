@@ -1,3 +1,5 @@
+import {EnumSocketEvent} from "./src/com/para/socketCore/ParaSocket";
+
 export declare class ParaSocket {
     public static showClientsInserver(serverName:string):void;
     public static registorServerSocketData(servername:string,socketData:Function):void;
@@ -64,7 +66,7 @@ export declare class ParaSocket {
      * @param {number} cmdID
      * @param {Function} callback
      */
-    public static addCallback(servername:string,cmdID:number,callback:(name:string,socketid:number,cmdid:number, buffer:Buffer) => void):void;
+    public static addCmmandCallback(servername:string,cmdID:number,callback:(name:string,socketid:number,cmdid:number, buffer:Buffer) => void):void;
     /**
      * !注意如果是服务端的连接是===removeClient()
      * 删除一个客户端
@@ -77,7 +79,12 @@ export declare class ParaSocket {
      * @param {number} socketid
      */
     public static removeClientOnServer(serverName:string,socketid:number): void;
-
+    /**
+     * 添加socket 事件的回调
+     * @param {EnumSocketEvent} evt
+     * @param {(serverName: string, client_id: number) => void} fc
+     */
+    public static addEventCallBack(evt:EnumSocketEvent,fc:(serverName:string,client_id:number)=>void):void
 }
 export declare class SocketData {
     constructor(socketname:string,socketID:number);

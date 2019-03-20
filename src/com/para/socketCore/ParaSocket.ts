@@ -10,7 +10,6 @@ import {Socket} from "net";
 import {ClientTcp} from "./socketClient/ClientTcp";
 import {SocketPackage} from "./SocketPackage";
 import {ServerTCPClient} from "./socketServer/ServerTCPClient";
-import {EnumSocketEvent} from "./socketEvent/EnumSocketEvent";
 
 /**
  * 添加服务器
@@ -37,7 +36,7 @@ export class ParaSocket
     private static tcpServerMgr:ServerTcpManager = new ServerTcpManager();
     private static tcpClientMgr:ClientTcpManager = new ClientTcpManager();
 
-    public static socketEventCenter:SocketEventManager = new SocketEventManager();
+    private static socketEventCenter:SocketEventManager = new SocketEventManager();
     public static config:ParaConfig = new ParaConfig();
 
     public static showLog:boolean = false;
@@ -59,11 +58,12 @@ export class ParaSocket
     public static showClientsInserver(serverName:string):void{
         ParaSocket.log("服务器【"+serverName+"】的连接人数："+ParaSocket.tcpServerMgr.getAllClinets(serverName).size);
     }
-    public static registorServerSocketData(servername:string,socketData:Function):void{
+    public static registorServerSocketData(servername:string,c:new(socketname:string,socketID:number)=> SocketData):void{
         if(this.socketServerMap.get(servername)==null){
-            this.socketServerMap.set(servername,socketData);
+            this.socketServerMap.set(servername,c);
         }
     }
+
 
     /**
      * 添加服务器
@@ -170,7 +170,7 @@ export class ParaSocket
      * @param {number} cmdID
      * @param {Function} callback
      */
-    public static addCallback(servername:string,cmdID:number,callback:(name:string,socketid:number,cmdid:number, buffer:Buffer) => void):void
+    public static addCmmandCallback(servername:string,cmdID:number,callback:(name:string,socketid:number,cmdid:number, buffer:Buffer) => void):void
     {
         var infoMain:InfoBase = ParaSocket.config.getServerInfoByName(servername);
         if(infoMain){
@@ -201,7 +201,23 @@ export class ParaSocket
         }
     }
 
+    public static callEvent(evt:EnumSocketEvent, param:any[]):void{
+        ParaSocket.socketEventCenter.callEvent(evt,param);
+    }
 
+    /**
+     * 添加socket 事件的回调
+     * @param {EnumSocketEvent} evt
+     * @param {(serverName: string, client_id: number) => void} fc
+     */
+    public static addEventCallBack(evt:EnumSocketEvent,fc:(serverName:string,client_id:number)=>void):void{
+        ParaSocket.socketEventCenter.addCallBack(evt,fc);
+    }
+    public static oneventcallback(sn:string):void{
+
+    }
+
+    CallBackFunction = ()=>{};
 
 
 }
@@ -238,5 +254,12 @@ export enum EnumServerType {
     local_server=1,
     ipv4_server=2,
     ipv6_server=3,
+}
+export enum EnumSocketEvent
+{
+    server_client_connected = 1,
+    server_client_disConnect=2,
+    client_connected=3,
+    client_disConnect=4
 }
 
