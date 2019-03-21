@@ -1,7 +1,8 @@
 # parasocket
 * a tcp socket server and client application
-* 1.0.20 add ParaSocket.d.ts
+* 1.0.26 add ParaSocket.d.ts
 
+https://www.npmjs.com/package/parasocket
 ********************************************************************************
 # how to  open log
 

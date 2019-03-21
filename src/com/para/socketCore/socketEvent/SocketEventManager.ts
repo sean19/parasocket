@@ -4,7 +4,7 @@ import {EnumSocketEvent} from "../ParaSocket";
 export class SocketEventManager
 {
     protected arr_info:EventInfo[] = [];
-    public addCallBack(evt:EnumSocketEvent,fc:Function):void
+    public addCallBack(evt:EnumSocketEvent,fc:(serverName:string,client_id:number)=>void):void
     {
         if(this.getEvent(evt,fc)!=null)return;
         this.arr_info.push(new EventInfo(evt,fc));

@@ -1,4 +1,3 @@
-import {EnumSocketEvent} from "./src/com/para/socketCore/ParaSocket";
 
 export declare class ParaSocket {
     public static showClientsInserver(serverName:string):void;
@@ -99,4 +98,11 @@ export enum EnumServerType {
     local_server=1,
     ipv4_server=2,
 
+}
+export enum EnumSocketEvent
+{
+    server_client_connected = 1,
+    server_client_disConnect=2,
+    client_connected=3,
+    client_disConnect=4
 }

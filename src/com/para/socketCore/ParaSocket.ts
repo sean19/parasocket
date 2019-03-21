@@ -213,9 +213,7 @@ export class ParaSocket
     public static addEventCallBack(evt:EnumSocketEvent,fc:(serverName:string,client_id:number)=>void):void{
         ParaSocket.socketEventCenter.addCallBack(evt,fc);
     }
-    public static oneventcallback(sn:string):void{
 
-    }
 
     CallBackFunction = ()=>{};
 
